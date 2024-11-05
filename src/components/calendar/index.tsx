@@ -1,34 +1,48 @@
 "use client";
 
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const today = dayjs();
 
-const totalDays = (today.get("month") + 1) % 2 === 0 ? 31 : 30;
-
 const Calendar = () => {
-  const [month, setMonth] = useState(today.get("month"));
-  const [days, setDays] = useState(totalDays);
+  const [date, setDate] = useState(today);
   const [arr, setArr] = useState<number[]>([]);
-  useEffect(() => {
-    const currentDate = today.get("date");
-    const currentMonthStartDays = today
+
+  const a = useCallback(() => {
+    const selectedMonth = date.get("month") + 1;
+    const selectedYear = date.get("year");
+    const days = [1, 3, 5, 7, 8, 10, 12].includes(selectedMonth)
+      ? 31
+      : selectedMonth === 2
+      ? selectedYear % 4 === 0
+        ? 29
+        : 28
+      : 30;
+    const currentDate = date.get("date");
+    const currentMonthStartDays = date
       .subtract(currentDate - 1, "days")
       .get("days");
-    const currentMonthEndDays = today
+    const currentMonthEndDays = date
       .add(days - currentDate, "days")
       .get("days");
     const currentMonthDays = Array.from(
       { length: days },
       (_, index) => index + 1
     );
+
+    const prevTotalDays = [1, 3, 5, 7, 8, 10, 12].includes(selectedMonth - 1)
+      ? 31
+      : selectedMonth - 1 === 2
+      ? selectedYear % 4 === 0
+        ? 29
+        : 28
+      : 30;
+
+    console.log(prevTotalDays);
     const prevMonthDays = Array.from(
       { length: currentMonthStartDays },
-      (_, index) =>
-        days === 30
-          ? 31 - currentMonthStartDays + index + 1
-          : 30 - currentMonthStartDays + index + 1
+      (_, index) => prevTotalDays - currentMonthStartDays + index + 1
     );
     const nextMonthDays = Array.from(
       { length: 6 - currentMonthEndDays },
@@ -36,13 +50,19 @@ const Calendar = () => {
     );
 
     setArr([...prevMonthDays, ...currentMonthDays, ...nextMonthDays]);
-  }, [days]);
+  }, [date]);
 
-  console.log("arr", arr);
+  useEffect(() => {
+    a();
+  }, [a]);
 
   return (
     <div className="border-[1px] border-white w-full">
-      <div>2024.11</div>
+      <div>2024.{date.get("month") + 1}</div>
+      <div onClick={() => setDate((prev) => prev.subtract(1, "month"))}>
+        Prev
+      </div>
+      <div onClick={() => setDate((prev) => prev.add(1, "month"))}>Next</div>
       <header className="flex justify-between items-center">
         <span className={"w-[14.285714285714286%]"}>Sun</span>
         <span className={"w-[14.285714285714286%]"}>Mon</span>
