@@ -20,7 +20,7 @@ const Main = () => {
   const [selectedDateInfos, setSelectedDateInfos] = useState<InfoType>([]);
 
   return (
-    <div className="border-[1px] border-white w-full">
+    <div className="border-white w-full">
       Main
       <Calendar
         setVisibleCreateAccount={setVisibleCreateAccount}
