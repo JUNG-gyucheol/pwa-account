@@ -4,6 +4,7 @@ import { InfoType } from "../main";
 const List: React.FC<{
   setVisibleCreateAccount: Dispatch<SetStateAction<boolean>>;
   setIsFirstMount: Dispatch<SetStateAction<boolean>>;
+  setSelectedDateInfos: Dispatch<SetStateAction<InfoType>>;
   selectedDate: string | undefined;
   selectedDateInfos: InfoType;
 }> = ({
@@ -11,8 +12,30 @@ const List: React.FC<{
   setVisibleCreateAccount,
   selectedDate,
   selectedDateInfos,
+  setSelectedDateInfos,
 }) => {
   const [isClickedItems, setIsClickedItems] = useState<boolean[]>([]);
+  const removeItem = (index: number) => {
+    setSelectedDateInfos((prev) => {
+      const excludeInfos = prev.filter((d) => d.date !== selectedDate);
+      const includeInfos = prev.find((d) => {
+        return d.date === selectedDate;
+      });
+
+      if (!includeInfos) {
+        return [...excludeInfos];
+      }
+
+      const infos = {
+        ...includeInfos,
+        list:
+          includeInfos.list.filter((_, i) => {
+            return i !== index;
+          }) || [],
+      };
+      return [...excludeInfos, infos];
+    });
+  };
 
   useEffect(() => {
     const s =
@@ -21,6 +44,7 @@ const List: React.FC<{
       })?.list || [];
     setIsClickedItems(Array(s.length).fill(false));
   }, [selectedDate, selectedDateInfos]);
+
   return (
     <div>
       <div
@@ -70,7 +94,10 @@ const List: React.FC<{
                       <span className="flex items-center justify-center text-blue-500 w-[50px] shrink-0 bg-black">
                         수정
                       </span>
-                      <span className="flex items-center justify-center text-red-500 w-[50px] shrink-0 bg-black">
+                      <span
+                        onClick={() => removeItem(index)}
+                        className="flex items-center justify-center text-red-500 w-[50px] shrink-0 bg-black"
+                      >
                         삭제
                       </span>
                       <span className="flex items-center justify-center text-gray-500 w-[50px] shrink-0 bg-black">

@@ -33,6 +33,7 @@ const Main = () => {
         selectedDateInfos={selectedDateInfos}
         setVisibleCreateAccount={setVisibleCreateAccount}
         setIsFirstMount={setIsFirstMount}
+        setSelectedDateInfos={setSelectedDateInfos}
       />
       {!isFirstMount && (
         <CreateAccount
