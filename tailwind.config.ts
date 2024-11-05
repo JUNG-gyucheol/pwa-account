@@ -12,6 +12,20 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      keyframes: {
+        slide_on: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        slide_off: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
+      },
+      animation: {
+        slide_on: "slide_on 0.3s ease-in-out forwards",
+        slide_off: "slide_off 0.3s ease-in-out forwards",
+      },
     },
   },
   plugins: [],
