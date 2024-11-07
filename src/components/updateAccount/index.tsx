@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { InfoType } from "../main";
+import axios from "axios";
 
 const UpdateAccount: React.FC<{
   visibleUpdateAccount: boolean;
@@ -9,11 +10,13 @@ const UpdateAccount: React.FC<{
   selectedDateInfos: InfoType;
   selectedIndex?: number;
   seletedDateList: {
+    id: number;
     isClicked: boolean;
     title: string;
     amount: string;
   }[];
   initSelectedIndex: () => void;
+  refetch: () => void;
 }> = ({
   close,
   visibleUpdateAccount,
@@ -22,6 +25,7 @@ const UpdateAccount: React.FC<{
   selectedIndex,
   seletedDateList,
   initSelectedIndex,
+  refetch,
 }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -68,26 +72,35 @@ const UpdateAccount: React.FC<{
       </div>
       <button
         onClick={() => {
-          setSelectedDateInfos((prev) => {
-            return prev.map((dateInfo) => {
-              if (dateInfo.date === selectedDate) {
-                return {
-                  ...dateInfo,
-                  list: dateInfo.list.map((item, index) => {
-                    if (index === selectedIndex) {
-                      return {
-                        ...item,
-                        title,
-                        amount,
-                      };
-                    }
-                    return item;
-                  }),
-                };
-              }
-              return dateInfo;
+          axios
+            .put("/api/test", {
+              id: seletedDateList[selectedIndex as number].id,
+              title,
+              amount,
+            })
+            .then(() => {
+              refetch();
             });
-          });
+          // setSelectedDateInfos((prev) => {
+          //   return prev.map((dateInfo) => {
+          //     if (dateInfo.date === selectedDate) {
+          //       return {
+          //         ...dateInfo,
+          //         list: dateInfo.list.map((item, index) => {
+          //           if (index === selectedIndex) {
+          //             return {
+          //               ...item,
+          //               title,
+          //               amount,
+          //             };
+          //           }
+          //           return item;
+          //         }),
+          //       };
+          //     }
+          //     return dateInfo;
+          //   });
+          // });
           initSelectedIndex();
           setTitle("");
           setAmount("");

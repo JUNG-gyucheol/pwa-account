@@ -10,6 +10,7 @@ import axios from "axios";
 export type InfoType = {
   date: string;
   list: {
+    id: number;
     title: string;
     amount: string;
     isClicked: boolean;
@@ -34,6 +35,7 @@ const Main = () => {
         date: v.date,
         list: v.list.map((item) => {
           return {
+            id: item.id,
             title: item.title,
             amount: item.amount,
             isClicked: false,
@@ -59,6 +61,7 @@ const Main = () => {
         setVisibleCreateAccount={setVisibleCreateAccount}
         setIsFirstMount={setIsFirstMount}
         setSelectedDateInfos={setSelectedDateInfos}
+        refetch={() => mutate()}
       />
       {!isFirstMount && (
         <CreateAccount

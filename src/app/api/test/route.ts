@@ -9,6 +9,7 @@ export async function GET() {
     include: {
       list: {
         select: {
+          id: true,
           title: true,
           amount: true,
         },
@@ -38,6 +39,38 @@ export async function POST(request: Request) {
       title: body.title,
       amount: Number(body.amount),
       dateId: body.date,
+    },
+  });
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    statusText: "ok",
+  });
+}
+
+export async function DELETE(request: Request) {
+  const body = await request.json();
+  await prisma.account.delete({
+    where: {
+      id: body.id,
+    },
+  });
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    statusText: "ok",
+  });
+}
+
+export async function PUT(request: Request) {
+  const body = await request.json();
+  await prisma.account.update({
+    where: {
+      id: body.id,
+    },
+    data: {
+      title: body.title,
+      amount: Number(body.amount),
     },
   });
 

@@ -7,6 +7,7 @@ import {
 } from "react";
 import { InfoType } from "../main";
 import UpdateAccount from "../updateAccount";
+import axios from "axios";
 
 const List: React.FC<{
   setVisibleCreateAccount: Dispatch<SetStateAction<boolean>>;
@@ -14,15 +15,18 @@ const List: React.FC<{
   setSelectedDateInfos: Dispatch<SetStateAction<InfoType>>;
   selectedDate: string | undefined;
   selectedDateInfos: InfoType;
+  refetch: () => void;
 }> = ({
   setIsFirstMount,
   setVisibleCreateAccount,
   selectedDate,
   selectedDateInfos,
   setSelectedDateInfos,
+  refetch,
 }) => {
   const [seletedDateList, setSeletedDateList] = useState<
     {
+      id: number;
       isClicked: boolean;
       title: string;
       amount: string;
@@ -31,25 +35,34 @@ const List: React.FC<{
   const [visibleUpdateAccount, setVisibleUpdateAccount] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>();
   const removeItem = (index: number) => {
-    setSelectedDateInfos((prev) => {
-      const excludeInfos = prev.filter((d) => d.date !== selectedDate);
-      const includeInfos = prev.find((d) => {
-        return d.date === selectedDate;
+    axios
+      .delete("/api/test", {
+        data: {
+          id: seletedDateList[index].id,
+        },
+      })
+      .then(() => {
+        refetch();
       });
+    // setSelectedDateInfos((prev) => {
+    //   const excludeInfos = prev.filter((d) => d.date !== selectedDate);
+    //   const includeInfos = prev.find((d) => {
+    //     return d.date === selectedDate;
+    //   });
 
-      if (!includeInfos) {
-        return [...excludeInfos];
-      }
+    //   if (!includeInfos) {
+    //     return [...excludeInfos];
+    //   }
 
-      const infos = {
-        ...includeInfos,
-        list:
-          includeInfos.list.filter((_, i) => {
-            return i !== index;
-          }) || [],
-      };
-      return [...excludeInfos, infos];
-    });
+    //   const infos = {
+    //     ...includeInfos,
+    //     list:
+    //       includeInfos.list.filter((_, i) => {
+    //         return i !== index;
+    //       }) || [],
+    //   };
+    //   return [...excludeInfos, infos];
+    // });
   };
 
   const handleClickItem = useCallback(
@@ -145,6 +158,7 @@ const List: React.FC<{
         selectedIndex={selectedIndex}
         seletedDateList={seletedDateList}
         initSelectedIndex={() => setSelectedIndex(undefined)}
+        refetch={refetch}
       />
     </>
   );
