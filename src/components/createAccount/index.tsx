@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { InfoType } from "../main";
+import { KeyedMutator } from "swr";
 
 const CreateAccount: React.FC<{
   visibleCreateAccount: boolean;
@@ -7,7 +8,14 @@ const CreateAccount: React.FC<{
   selectedDate: string;
   setSelectedDateInfos: Dispatch<SetStateAction<InfoType>>;
   selectedDateInfos: InfoType;
-}> = ({ close, visibleCreateAccount, selectedDate, setSelectedDateInfos }) => {
+  mutate: KeyedMutator<InfoType>;
+}> = ({
+  close,
+  visibleCreateAccount,
+  selectedDate,
+  setSelectedDateInfos,
+  mutate,
+}) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
 
@@ -39,19 +47,32 @@ const CreateAccount: React.FC<{
       </div>
       <button
         onClick={() => {
-          setSelectedDateInfos((prev) => {
-            const prevv = prev.filter((v) => v.date !== selectedDate);
-            const selectedDateInfo = prev.find((v) => {
-              return v.date === selectedDate;
+          fetch("/api/test", {
+            method: "POST",
+            body: JSON.stringify({ title, amount, date: selectedDate }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log("dsds", data);
+              // console.log(data);
+              mutate();
             });
-            return [
-              ...prevv,
-              {
-                date: selectedDateInfo?.date || selectedDate,
-                list: [...(selectedDateInfo?.list || []), { title, amount }],
-              },
-            ];
-          });
+          // setSelectedDateInfos((prev) => {
+          //   const prevv = prev.filter((v) => v.date !== selectedDate);
+          //   const selectedDateInfo = prev.find((v) => {
+          //     return v.date === selectedDate;
+          //   });
+          //   return [
+          //     ...prevv,
+          //     {
+          //       date: selectedDateInfo?.date || selectedDate,
+          //       list: [
+          //         ...(selectedDateInfo?.list || []),
+          //         { title, amount, isClicked: false },
+          //       ],
+          //     },
+          //   ];
+          // });
           setTitle("");
           setAmount("");
           close();
