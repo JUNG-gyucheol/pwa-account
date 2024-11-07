@@ -20,7 +20,7 @@ const fetcher = (url: string) =>
   axios.get<InfoType>(url).then((res) => res.data);
 
 const Main = () => {
-  const { data, error, mutate } = useSWR("/api/test", fetcher);
+  const { data, mutate } = useSWR("/api/test", fetcher);
   console.log(data);
   const [visibleCreateAccount, setVisibleCreateAccount] = useState(false);
   const [isFirstMount, setIsFirstMount] = useState(true);

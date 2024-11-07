@@ -9,13 +9,7 @@ const CreateAccount: React.FC<{
   setSelectedDateInfos: Dispatch<SetStateAction<InfoType>>;
   selectedDateInfos: InfoType;
   mutate: KeyedMutator<InfoType>;
-}> = ({
-  close,
-  visibleCreateAccount,
-  selectedDate,
-  setSelectedDateInfos,
-  mutate,
-}) => {
+}> = ({ close, visibleCreateAccount, selectedDate, mutate }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
 
