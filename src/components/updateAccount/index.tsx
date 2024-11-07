@@ -21,7 +21,6 @@ const UpdateAccount: React.FC<{
   close,
   visibleUpdateAccount,
   selectedDate,
-  setSelectedDateInfos,
   selectedIndex,
   seletedDateList,
   initSelectedIndex,
