@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import useCalendar from "./hooks/useCalendar";
 import { InfoType } from "../main";
 
-const randoms = Array.from({ length: 100 }).map((_, index) => {
+const randoms = Array.from({ length: 100 }).map(() => {
   return {
     positionX: Math.floor(Math.random() * 96 + 1),
     positionY: Math.floor(Math.random() * 100 + 1),
