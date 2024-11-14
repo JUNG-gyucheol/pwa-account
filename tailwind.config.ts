@@ -11,6 +11,22 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        background_secondary: "var(--background-secondary)",
+        border: {
+          primary: "var(--border-primary)",
+        },
+        text: {
+          primary: "var(--text-primary)",
+          secondary: "var(--text-secondary)",
+          tertiary: "var(--text-tertiary)",
+        },
+        button: {
+          primary: "var(--button-primary)",
+        },
+      },
+      boxShadow: {
+        primary: "0px 0px 6px 20px var(--background-secondary)",
+        secondary: "0px 0px 6px 4px var(--background-secondary)",
       },
       keyframes: {
         slide_on: {

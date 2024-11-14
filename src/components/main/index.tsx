@@ -6,6 +6,7 @@ import CreateAccount from "../createAccount";
 import List from "../list";
 import useSWR from "swr";
 import axios from "axios";
+import dayjs from "dayjs";
 
 export type InfoType = {
   date: string;
@@ -22,10 +23,11 @@ const fetcher = (url: string) =>
 
 const Main = () => {
   const { data, mutate } = useSWR("/api/test", fetcher);
-  console.log(data);
   const [visibleCreateAccount, setVisibleCreateAccount] = useState(false);
   const [isFirstMount, setIsFirstMount] = useState(true);
-  const [selectedDate, setSelectedDate] = useState<string>();
+  const [selectedDate, setSelectedDate] = useState<string>(
+    dayjs().format("YYYY-MM-D")
+  );
   const [selectedDateInfos, setSelectedDateInfos] = useState<InfoType>([]);
 
   useEffect(() => {
@@ -48,12 +50,12 @@ const Main = () => {
 
   return (
     <div className="border-white w-full">
-      Main
       <Calendar
         setVisibleCreateAccount={setVisibleCreateAccount}
         setIsFirstMount={setIsFirstMount}
         setSelectedDate={setSelectedDate}
         selectedDateInfos={selectedDateInfos}
+        selectedDate={selectedDate}
       />
       <List
         selectedDate={selectedDate}

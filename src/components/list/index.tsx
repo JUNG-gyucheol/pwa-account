@@ -8,6 +8,7 @@ import {
 import { InfoType } from "../main";
 import UpdateAccount from "../updateAccount";
 import axios from "axios";
+import { FaPlus } from "react-icons/fa";
 
 const List: React.FC<{
   setVisibleCreateAccount: Dispatch<SetStateAction<boolean>>;
@@ -44,25 +45,6 @@ const List: React.FC<{
       .then(() => {
         refetch();
       });
-    // setSelectedDateInfos((prev) => {
-    //   const excludeInfos = prev.filter((d) => d.date !== selectedDate);
-    //   const includeInfos = prev.find((d) => {
-    //     return d.date === selectedDate;
-    //   });
-
-    //   if (!includeInfos) {
-    //     return [...excludeInfos];
-    //   }
-
-    //   const infos = {
-    //     ...includeInfos,
-    //     list:
-    //       includeInfos.list.filter((_, i) => {
-    //         return i !== index;
-    //       }) || [],
-    //   };
-    //   return [...excludeInfos, infos];
-    // });
   };
 
   const handleClickItem = useCallback(
@@ -97,14 +79,17 @@ const List: React.FC<{
   return (
     <>
       <div>
-        <div
-          onClick={() => {
-            setVisibleCreateAccount(true);
-            setIsFirstMount(false);
-          }}
-          className="text-center p-4"
-        >
-          🌟추가하기 버튼🌟(선택한 날짜{selectedDate})
+        <div className="text-center text-text-primary p-9 font-bold flex items-center justify-center">
+          <div
+            onClick={() => {
+              setVisibleCreateAccount(true);
+              setIsFirstMount(false);
+            }}
+            className="cursor-pointer flex items-center justify-center bg-button-primary text-text-tertiary rounded-full py-2 px-6 hover:opacity-80 transition-all duration-300"
+          >
+            <span className="mr-1">Add</span>
+            <FaPlus />
+          </div>
         </div>
         <div className="">
           {seletedDateList.map((v, index) => {
