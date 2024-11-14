@@ -79,13 +79,13 @@ const List: React.FC<{
   return (
     <>
       <div>
-        <div className="text-center text-text-primary p-9 font-bold flex items-center justify-center">
+        <div className="relative text-center text-text-primary p-4 font-bold flex items-center justify-center">
           <div
             onClick={() => {
               setVisibleCreateAccount(true);
               setIsFirstMount(false);
             }}
-            className="cursor-pointer flex items-center justify-center bg-button-primary text-text-tertiary rounded-full py-2 px-6 hover:opacity-80 transition-all duration-300"
+            className="cursor-pointer flex items-center justify-center bg-button-primary text-text-tertiary rounded-full py-1 px-5 hover:opacity-80 transition-all duration-300 text-[12px]"
           >
             <span className="mr-1">Add</span>
             <FaPlus />

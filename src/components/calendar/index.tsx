@@ -4,9 +4,9 @@ import { Dispatch, SetStateAction } from "react";
 import useCalendar from "./hooks/useCalendar";
 import { InfoType } from "../main";
 
-const randoms = Array.from({ length: 100 }).map(() => {
+const randoms = Array.from({ length: 30 }).map(() => {
   return {
-    positionX: Math.floor(Math.random() * 96 + 1),
+    positionX: Math.floor(Math.random() * 94 + 1),
     positionY: Math.floor(Math.random() * 100 + 1),
   };
 });
@@ -21,7 +21,7 @@ const Calendar: React.FC<{
   const { date, setDate, days } = useCalendar();
 
   return (
-    <div className="w-full rounded-lg shadow-primary bg-background_secondary relative">
+    <div className="w-full rounded-lg shadow-primary bg-background_secondary relative text-[14px]">
       <div className="p-4 flex gap-2 justify-center items-center text-text-primary font-bold">
         <div onClick={() => setDate((prev) => prev.subtract(1, "month"))}>
           Prev
@@ -31,7 +31,7 @@ const Calendar: React.FC<{
         </div>
         <div onClick={() => setDate((prev) => prev.add(1, "month"))}>Next</div>
       </div>
-      <header className="border-b-border-primary border-b-[1px] flex justify-between items-center text-text-primary font-bold">
+      <header className="border-b-border-primary border-b-[1px] flex justify-between items-center text-text-primary font-bold text-[12px]">
         <span className={"w-[14.285714285714286%] text-center"}>Sun</span>
         <span className={"w-[14.285714285714286%] text-center"}>Mon</span>
         <span className={"w-[14.285714285714286%] text-center"}>Tue</span>
@@ -60,7 +60,7 @@ const Calendar: React.FC<{
                   d === selectedDate
                     ? "text-text-tertiary bg-text-primary"
                     : "text-text-secondary"
-                } w-[30px] h-[30px] flex items-center justify-center cursor-pointer rounded-full hover:bg-text-primary hover:text-text-tertiary transition-all duration-300`}
+                } w-[20px] h-[20px] flex items-center justify-center cursor-pointer rounded-full hover:bg-text-primary hover:text-text-tertiary transition-all duration-300 text-[12px]`}
               >
                 {d.split("-")[2]}
               </div>
