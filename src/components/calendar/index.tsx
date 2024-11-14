@@ -22,7 +22,7 @@ const Calendar: React.FC<{
 
   return (
     <div className="w-full rounded-lg shadow-primary bg-background_secondary relative text-[14px]">
-      <div className="p-4 flex gap-2 justify-center items-center text-text-primary font-bold">
+      <div className="pt-2 pb-4 flex gap-2 justify-center items-center text-text-primary font-bold">
         <div onClick={() => setDate((prev) => prev.subtract(1, "month"))}>
           Prev
         </div>
