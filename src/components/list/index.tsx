@@ -96,7 +96,7 @@ const List: React.FC<{
             return (
               <div
                 key={index}
-                className="flex bg-white justify-between border-[1px] border-lime-400 mb-[10px]"
+                className="flex bg-white justify-between border-[0px] border-border-primary mb-[10px]"
                 onClick={() => {
                   handleClickItem(index);
                 }}
@@ -107,7 +107,7 @@ const List: React.FC<{
                 </div>
                 <div
                   className={`flex ${
-                    seletedDateList[index]?.isClicked ? "w-[150px]" : "w-[0px]"
+                    seletedDateList[index]?.isClicked ? "w-[240px]" : "w-[0px]"
                   } overflow-hidden transition-all duration-300`}
                 >
                   <span
@@ -115,18 +115,18 @@ const List: React.FC<{
                       setSelectedIndex(index);
                       setVisibleUpdateAccount(true);
                     }}
-                    className="flex items-center justify-center text-blue-500 w-[50px] shrink-0 bg-black"
+                    className=" flex items-center justify-center text-text-primary w-[80px] shrink-0 bg-blue-300"
                   >
-                    수정
+                    Update
                   </span>
                   <span
                     onClick={() => removeItem(index)}
-                    className="flex items-center justify-center text-red-500 w-[50px] shrink-0 bg-black"
+                    className="flex items-center justify-center text-red-700 w-[80px] shrink-0 bg-foreground bg-red-300"
                   >
-                    삭제
+                    Remove
                   </span>
-                  <span className="flex items-center justify-center text-gray-500 w-[50px] shrink-0 bg-black">
-                    취소
+                  <span className="flex items-center justify-center text-gray-700 w-[80px] shrink-0 bg-gray-400">
+                    Cancel
                   </span>
                 </div>
               </div>

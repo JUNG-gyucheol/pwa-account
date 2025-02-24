@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { InfoType } from "../main";
 import axios from "axios";
+import { IoClose } from "react-icons/io5";
 
 const UpdateAccount: React.FC<{
   visibleUpdateAccount: boolean;
@@ -38,76 +39,62 @@ const UpdateAccount: React.FC<{
 
   return (
     <div
-      className={`fixed top-0 left-0 overflow-hidden ${
-        visibleUpdateAccount ? "translate-x-[0%]" : "-translate-x-[-100%]"
-      } w-full  h-full bg-slate-700 transition-all duration-300`}
+      className={`fixed top-0 left-0 w-full h-full text-text-primary bg-background_secondary p-[10px] ${
+        visibleUpdateAccount ? "animate-slide_on" : "animate-slide_off"
+      }`}
     >
-      <div
-        onClick={() => {
-          initSelectedIndex();
-          close();
-        }}
-      >
-        Close
-      </div>
-      <div>{selectedDate}</div>
-      <div>
-        title:
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          type="text"
-          className="text-black"
+      <div className="flex justify-between text-[24px] items-center">
+        <div>{selectedDate}</div>
+        <IoClose
+          onClick={() => {
+            initSelectedIndex();
+            close();
+          }}
+          className="cursor-pointer"
         />
       </div>
-      <div>
-        amount:
-        <input
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          type="text"
-          className="text-black"
-        />
+      <div className="flex flex-col gap-[10px] mt-[20px]">
+        <div className="flex flex-col gap-[4px]">
+          <span>title</span>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            type="text"
+            className="text-black"
+          />
+        </div>
+        <div className="flex flex-col gap-[4px]">
+          <span>amount</span>
+          <input
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            type="text"
+            className="text-black"
+          />
+        </div>
       </div>
-      <button
-        onClick={() => {
-          axios
-            .put("/api/test", {
-              id: seletedDateList[selectedIndex as number].id,
-              title,
-              amount,
-            })
-            .then(() => {
-              refetch();
-            });
-          // setSelectedDateInfos((prev) => {
-          //   return prev.map((dateInfo) => {
-          //     if (dateInfo.date === selectedDate) {
-          //       return {
-          //         ...dateInfo,
-          //         list: dateInfo.list.map((item, index) => {
-          //           if (index === selectedIndex) {
-          //             return {
-          //               ...item,
-          //               title,
-          //               amount,
-          //             };
-          //           }
-          //           return item;
-          //         }),
-          //       };
-          //     }
-          //     return dateInfo;
-          //   });
-          // });
-          initSelectedIndex();
-          setTitle("");
-          setAmount("");
-          close();
-        }}
-      >
-        저장
-      </button>
+      <div className="fixed bottom-0 left-0 translate-y-[-100%] w-full flex items-center justify-center">
+        <button
+          className="cursor-pointer w-[90%] h-[50px] bg-button-primary rounded-xl text-text-tertiary font-bold"
+          onClick={() => {
+            axios
+              .put("/api/test", {
+                id: seletedDateList[selectedIndex as number].id,
+                title,
+                amount,
+              })
+              .then(() => {
+                refetch();
+              });
+            initSelectedIndex();
+            setTitle("");
+            setAmount("");
+            close();
+          }}
+        >
+          Save
+        </button>
+      </div>
     </div>
   );
 };
